@@ -10,12 +10,12 @@ Gem::Specification.new do |spec|
   spec.email         = ["mail@tanakakazuki.com"]
   spec.summary       = %q{ Magic logic }
   spec.description   = %q{ Magic logic }
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/Hilbert-lang/magic_logic"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.files         = Dir['lib/**/*', 'bin/*', 'test/**/*']
+  spec.executables   = ['magic_logic']
+  spec.test_files    = Dir["test/**/*_test.rb"]
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.7"
