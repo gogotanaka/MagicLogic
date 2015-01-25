@@ -1,7 +1,6 @@
 require "magic_logic/base"
 
 module MagicLogic
-  # Tautology
   class Taut
     include Base
     def ~@;   $utout end
@@ -11,7 +10,6 @@ module MagicLogic
   end
   $tout = Taut.new
 
-  # Non Tautology
   class UTaut
     include Base
     def ~@;   $tout   end
@@ -36,7 +34,7 @@ module MagicLogic
 
   class NEG < Struct.new(:p)
     include Base
-    def to_s;  "~#{p}"    end
+    def to_s; "~#{p}" end
   end
 
   class FORM < Struct.new(:vars, :ope)
