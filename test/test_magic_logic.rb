@@ -5,13 +5,6 @@ class TestMagicLogic < MiniTest::Unit::TestCase
   $q = P['Q']
   $r = P['R']
 
-  def setup
-
-  end
-  def assert_to_s(exp, obj)
-    assert_equal(exp, obj.dpll.to_s)
-  end
-
   def test_utils
     assert_equal true  , $p.neg?(~$p)
     assert_equal true  , (~$p).neg?($p)
