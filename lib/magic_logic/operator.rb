@@ -13,9 +13,9 @@ module MagicLogic
         else
           if neg?(q)
             (_ ope, $tout, $utout)
-          elsif is_form?(ope.to_sym) && include?(q)
+          elsif is_form?(ope.to_sym) && vars.include?(q)
             self
-          elsif q.is_form?(ope) && q.include?(self)
+          elsif q.is_form?(ope) && q.vars.include?(self)
             q
           else
             FORM.new([self, q], ope)

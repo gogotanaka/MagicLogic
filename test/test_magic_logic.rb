@@ -10,8 +10,8 @@ class TestMagicLogic < MiniTest::Unit::TestCase
     assert_equal true  , (~$p).neg?($p)
     assert_equal false , ($p).neg?($p)
     assert_equal false , ($p).neg?($p)
-    assert_equal true  , ($p + $q).include?($p)
-    assert_equal true  , ($p + $q).include?($q)
+    assert_equal true  , ($p + $q).vars.include?($p)
+    assert_equal true  , ($p + $q).vars.include?($q)
   end
 
   def test_0_1

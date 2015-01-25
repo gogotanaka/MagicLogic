@@ -21,7 +21,10 @@ module MagicLogic
 
   class Atom < Struct.new(:p)
     include Base
-    def to_s;  p.to_s end
+    def ~@;   super   end
+    def +(q); super   end
+    def *(q); super   end
+    def to_s; p.to_s  end
 
     class << self
       def [](x)
@@ -34,6 +37,9 @@ module MagicLogic
 
   class NEG < Struct.new(:p)
     include Base
+    def ~@;   super   end
+    def +(q); super   end
+    def *(q); super   end
     def to_s; "~#{p}" end
   end
 
@@ -43,9 +49,10 @@ module MagicLogic
       self.vars = vars.map { |var| var.is_form?(ope) ? var.vars : var }.flatten
       self.ope = ope
     end
-
-    def to_s;        "(#{vars.map(&:to_s).join(_ ope, '|', '&')})" end
-    def include?(p); vars.include?(p)                              end
+    def ~@;   super   end
+    def +(q); super   end
+    def *(q); super   end
+    def to_s; "(#{vars.map(&:to_s).join(_ ope, '|', '&')})" end
   end
 
   class ::Array
