@@ -8,7 +8,6 @@ module MagicLogic
     def *(q); q      end
     def to_s; 'TRUE' end
   end
-  $tout = Taut.new
 
   class UTaut
     include Base
@@ -17,7 +16,6 @@ module MagicLogic
     def *(q); $utout  end
     def to_s; 'FALSE' end
   end
-  $utout = UTaut.new
 
   class Atom < Struct.new(:p)
     include Base
@@ -25,15 +23,7 @@ module MagicLogic
     def +(q); super   end
     def *(q); super   end
     def to_s; p.to_s  end
-
-    class << self
-      def [](x)
-        new(x).tap { |p| $atoms << p; $atoms.uniq! }
-      end
-    end
   end
-  P = Atom
-  $atoms = []
 
   class NEG < Struct.new(:p)
     include Base
@@ -45,25 +35,34 @@ module MagicLogic
 
   class FORM < Struct.new(:vars, :ope)
     include Base
-    def initialize(vars, ope)
-      self.vars = vars.map { |var| var.is_form?(ope) ? var.vars : var }.flatten
-      self.ope = ope
-    end
     def ~@;   super   end
     def +(q); super   end
     def *(q); super   end
     def to_s; "(#{vars.map(&:to_s).join(_ ope, '|', '&')})" end
-  end
 
-  class ::Array
-    def >>(con)
-      l = inject($tout) { |s, p| s * p } >= con
-      case l.dpll
-      when Taut  then 'TRUE'
-      when UTaut then 'FALSE'
-      else            'UNDECIDABLE'
-      end
+    def initialize(vars, ope)
+      self.vars = vars.map { |var| var.is_form?(ope) ? var.vars : var }.flatten
+      self.ope = ope
     end
   end
 end
 include MagicLogic
+
+class ::Array
+  def >>(con)
+    l = inject($tout) { |s, p| s * p } >= con
+    case l.dpll
+    when Taut  then 'TRUE'
+    when UTaut then 'FALSE'
+    else            'UNDECIDABLE'
+    end
+  end
+end
+
+P = Atom
+$atoms = []
+$utout = UTaut.new
+$tout = Taut.new
+def Atom.[](x)
+  new(x).tap { |p| $atoms << p; $atoms.uniq! }
+end
