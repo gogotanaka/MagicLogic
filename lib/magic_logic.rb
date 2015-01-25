@@ -1,10 +1,6 @@
-require "magic_logic/utils"
-require "magic_logic/operator"
-require "magic_logic/sat_algorithm"
+require "magic_logic/base"
 
 module MagicLogic
-  module Base; include Operator; include Utils; include SatAlgorithm end
-
   # Tautology
   class Taut
     include Base
