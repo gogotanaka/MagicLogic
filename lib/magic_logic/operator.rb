@@ -1,34 +1,13 @@
 module MagicLogic
   module Operator
-    def _ ope, l, r
-      ope == :+ ? l : r
-    end
-
     [:+, :*].each do |ope|
       define_method(ope) do |q|
-        case q
-        when Taut  then _ ope, $tout, self
-        when UTaut then _ ope, self, $utout
-        when self  then self
-        else
-          if neg?(q)
-            (_ ope, $tout, $utout)
-          elsif is_form?(ope.to_sym) && vars.include?(q)
-            self
-          elsif q.is_form?(ope) && q.vars.include?(self)
-            q
-          else
-            FORM.new([self, q], ope)
-          end
-        end
+        Node.new(self, ope, q)
       end
     end
 
     def ~@
-      if    is_neg?  then p
-      elsif is_form? then vars.map(&:~).inject(_ ope, :*, :+)
-      else                NEG.new(self)
-      end
+      Neg.new(self)
     end
 
     def >=(q)
