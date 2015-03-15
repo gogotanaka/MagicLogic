@@ -1,11 +1,11 @@
 require "magic_logic/base"
 
 module MagicLogic
-  class Atom < Struct.new(:p)
+  class Atom < Struct.new(:obj)
     include Base
 
     def to_s
-      p.to_s
+      obj.to_s
     end
   end
 

@@ -11,17 +11,18 @@ module MagicLogic
     end
 
     class ::String
-      def sbst!(num, bool)
-        gsub!(/#{ATOM_PREFIX}#{num}/, bool.to_s)
+      def sbst(bools)
+        bools.each.with_index.inject(self) do |str, (bool, i)|
+          str.gsub(/#{ATOM_PREFIX}#{i}/, bool.to_s)
+        end
       end
     end
 
     def dpll
       count = $atoms.count
+      svl_str = evl
       rslt = (1 .. 2 ** count).map do |i|
-        s = evl
-        count.times { |j| s.sbst!(j, (i >> j) & 1 == 1)  }
-        eval(s) rescue binding.pry
+        eval(svl_str.sbst (1 .. count).map { |j| (i >> j) & 1 == 1 })
       end
       case rslt.uniq
       when [true]  then true

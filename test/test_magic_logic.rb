@@ -30,6 +30,7 @@ class TestMagicLogic < MiniTest::Unit::TestCase
 
   def test_prolog
     assert_equal "TRUE"        , [$p] >> $p
+    assert_equal "FALSE"       , [$p] >> ~$p
     assert_equal "TRUE"        , [$p >= $q, $q >= $r] >> ($p >= $r)
     assert_equal "UNDECIDABLE" , [$p] >> $q
   end
